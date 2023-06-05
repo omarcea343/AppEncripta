@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 import algoritmo
+import socket
+from tkinter import messagebox
 
 class DesencriptarApp:
     def __init__(self, master):
@@ -38,6 +40,9 @@ class DesencriptarApp:
         self.left_panel.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.left_panel.pack_propagate(0)
 
+        self.receive_button = ttk.Button(self.left_panel, text="Recibir datos del servidor", command=self.receive_data)
+        self.receive_button.pack()
+        
         self.message_label = ttk.Label(self.left_panel, text="Mensaje encriptado:")
         self.message_label.pack()
 
@@ -76,9 +81,37 @@ class DesencriptarApp:
 
         self.steps_scrollbar.config(command=self.steps_text.yview)
 
+    def receive_data(self):
+        try:
+            # Connect to the server
+            client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            client_socket.connect(("localhost", 1234))
 
+            # Send a request for data
+            client_socket.sendall(b"request_data")
+
+            # Receive the data from the server
+            data = client_socket.recv(1024).decode()
+
+            # Split the data into the encrypted message and key
+            encrypted_message, key = data.split("|")
+
+            # Show the encrypted message and key in the GUI
+            self.message_entry.delete("1.0", tk.END)
+            self.message_entry.insert(tk.END, encrypted_message)
+            self.key_entry.delete("1.0", tk.END)
+            self.key_entry.insert(tk.END, key)
+        except Exception as e:
+            tk.messagebox.showerror("Error", f"An error occurred while receiving data from the server: {e}")
+        finally:
+            client_socket.close()
+    
     def decrypt_message(self):
         try:
+            if self.message_entry.get("1.0", tk.END).strip() == "" and self.key_entry.get("1.0", tk.END).strip() == "":
+                # If there is no data entered manually, try to receive data from the server
+                self.receive_data()
+
             encrypted_message = bytes.fromhex(self.message_entry.get("1.0", tk.END).strip())
             key = bytes.fromhex(self.key_entry.get("1.0", tk.END).strip())
             decrypted_message, steps = self.decryption.decrypt_message(encrypted_message, key)
@@ -89,7 +122,6 @@ class DesencriptarApp:
                 self.steps_text.insert(tk.END, step + "\n")
         except Exception as e:
             tk.messagebox.showerror("Error", f"An error occurred while decrypting the message: {e}")
-
 
 if __name__ == "__main__":
     root = tk.Tk()
