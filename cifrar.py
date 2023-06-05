@@ -93,23 +93,24 @@ class CifrarApp:
             self.steps_text.insert(tk.END, "\n".join(steps))
         except Exception as e:
             tk.messagebox.showerror("Error", f"An error occurred while encrypting the message: {e}")
-
+    
     def send_message(self):
         # Get the encrypted message and key
         encrypted_message = self.encrypted_message_text.get("1.0", tk.END).strip()
         key = self.key_text.get("1.0", tk.END).strip()
 
+        # Combine the message and key into a single string, separated by '|'
+        message_and_key = f"{encrypted_message}|{key}"
+
         # Create a socket and connect to the server
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect(("localhost", 1234))
 
-        # Send the encrypted message and key to the server
-        s.sendall(f"{encrypted_message}\n{key}".encode())
+        # Send the message and key to the server
+        s.sendall(message_and_key.encode())
 
         # Close the socket
         s.close()
-
-
 
 if __name__ == "__main__":
     root = tk.Tk()
