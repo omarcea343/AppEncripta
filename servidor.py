@@ -3,7 +3,7 @@ import threading
 
 class Servidor:
     def __init__(self):
-        self.host = "localhost"
+        self.host = "25.66.163.155"
         self.port = 58765
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.bind((self.host, self.port))
