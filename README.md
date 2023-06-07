@@ -4,9 +4,9 @@ Es un algoritmo basico de fines educativos no seguro que encripta un mensaje tie
 
 ## Caracteristicas
 
-Genera dos archivos:
-- ResultadosLexico.txt
-- ErroresLexico.txt
+Son dos archivos:
+- Cifrar.py
+- Decifrar.py
 
 Ademas incluye dos archivos de prueba para generar resultados que incluyan errores.
 
