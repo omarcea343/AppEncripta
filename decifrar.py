@@ -20,6 +20,9 @@ class DesencriptarApp:
 
         # Create the GUI
         self.create_gui()
+        
+        # Set the icon of the window
+        self.master.iconbitmap("lock.ico")
 
     def create_gui(self):
         # Create the menu
