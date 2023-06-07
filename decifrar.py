@@ -85,7 +85,7 @@ class DesencriptarApp:
         try:
             # Connect to the server
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client_socket.connect(("localhost", 1234))
+            client_socket.connect(("localhost", 58765))
 
             # Send a request for data
             client_socket.sendall(b"request_data")
