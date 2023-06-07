@@ -8,7 +8,7 @@ Son dos archivos:
 - Cifrar.py
 - Decifrar.py
 
-Ademas incluye dos archivos de prueba para generar resultados que incluyan errores.
+Ademas incluye un servidor simple para manejar el envio por una red local.
 
 ## Ejecucion
 
