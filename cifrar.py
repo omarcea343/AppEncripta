@@ -104,7 +104,7 @@ class CifrarApp:
 
         # Create a socket and connect to the server
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(("25.66.163.155", 58765))
+        s.connect(("25.66.221.245", 58765))
 
         # Send the message and key to the server
         s.sendall(message_and_key.encode())
